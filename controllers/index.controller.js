@@ -71,15 +71,7 @@ module.exports = {
       balance: 0
     })
 
-    // Validate if request has required fields
-    const validationErrors = user.validateSync()
-    if (validationErrors) {
-      res.status(400).json({
-        errors: validationErrors.message
-      })
-    } else {
-      const savedUser = await user.save()
-      res.status(201).send(savedUser)
-    }
+    const savedUser = await user.save()
+    res.status(201).send(savedUser)
   }
 }

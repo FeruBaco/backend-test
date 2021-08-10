@@ -44,12 +44,23 @@ module.exports = {
       res.status(200).send(updatedUser)
     } catch (error) {
       res.status(400).json({
-        error: 'Error in updating "User" data'
+        error: 'Error in updating "User" data.'
       })
     }
   },
-  // Add money to user account
+  // Add amount to user balance
   addBalance: async function (req, res) {
-
+    const { id, amount } = req.body
+    try {
+      const user = await User.findOne({ _id: id })
+      const newBalance = user.balance + amount
+      await User.updateOne({ _id: id }, { balance: newBalance })
+      const updatedUser = await User.findOne({ _id: id })
+      res.status(200).send(updatedUser)
+    } catch (error) {
+      res.status(400).json({
+        error: 'Error adding new balance.'
+      })
+    }
   }
 }

@@ -56,6 +56,9 @@ module.exports = {
     const { name, phone, email, password } = body
     const type = 'user'
 
+    const createdUser = await User.findOne({ email })
+    if (createdUser) { return res.status(400).json({ error: 'Email already registered.' }) }
+
     const saltRounds = 10
     const passwordHash = await bcrypt.hash(password, saltRounds)
 

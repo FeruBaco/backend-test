@@ -5,10 +5,7 @@ const UserSchema = Schema({
     type: String,
     required: [true, 'This field is required']
   },
-  phone: {
-    type: String,
-    required: [true, 'This field is required']
-  },
+  phone: String,
   email: {
     type: String,
     required: [true, 'This field is required']

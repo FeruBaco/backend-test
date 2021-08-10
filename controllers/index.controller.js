@@ -33,13 +33,13 @@ module.exports = {
       type: user.type
     }
     /**
-     * Generate token with payload and expires in 1 hour
+     * Generate token with payload and expires in 12 hours
      */
     const token = jwt.sign(
       payload,
       process.env.JWT_SECRET,
       {
-        expiresIn: '1h'
+        expiresIn: 60 * 60 * 12
       }
     )
 

@@ -1,0 +1,103 @@
+=== EXAMEN PARA BACKEND (JSON API REST) ===
+
+    Tecnologías
+        -> NodeJs
+        -> Express
+        -> Mongodb
+        -> Joi (https://joi.dev/api/?v=17.4.1)
+
+    Descripción
+        ->  Desarrollar una API REST para realizar el pago de boletos de estacionamiento y generar reportes de los pagos.
+        
+        Endpoints
+            1) Endpoint para registrar nuevos usuarios. ✅
+                Método: POST
+                Parámetros: nombre, teléfono, correo, contraseña
+                Respuesta: Todo el nuevo registro creado (id, nombre, teléfono, correo, contraseña, fecha de creación, saldo disponible)
+
+            2) Endpoint para logear al usuario. ✅
+                Método: POST
+                Parámetros: correo, contraseña
+                Respuesta: {
+                    "accessToken": "3Gc60QmoQO0IqWnCH7Jh2O3kFjREjHDDshfcn4i0076GBwhja2TV17MDjyMIyKMD" (token de acceso generado, debe almacenarse en la base de datos)
+                }
+
+            3) Endpoint para modificar los datos del usuarios. ✅
+                Método: PATCH
+                Parámetros: Los que deseen modificarse (en el caso de la contraseña, debe encriptarse nuevamente antes de sobreescribirse)
+                Respuesta: Todo el registro actualizado (id, nombre, teléfono, correo, contraseña, fecha de creación, saldo disponible)
+
+            4) Endpoint para abonar saldo a usuario ✅
+                Método: POST
+                Parámetros: id de usuario, monto a abonar
+                Respuesta: Todo el registro actualizado (id, nombre, teléfono, correo, contraseña, fecha de creación, saldo disponible)
+
+            5) Endpoint para consultar la lista de estacionamientos. ✅
+                Método: GET
+                Parámetros: Ninguno
+                Respuesta: Lista de estacionamientos obtenida desde URL
+
+            6) Endpoint para realizar pagos de estacionamientos.
+                Método: POST
+                Parámetros: id de usuario, monto a pagar, id de estacionamiento
+                Respuesta: Todo el nuevo registro creado (id, total, boleto, fecha de creación, id de usuario, id de estacionamiento)
+   
+            7) Endpoint para ver las transacciones filtradas por id de usuario.
+                Método: GET
+                Parámetros: Id de usuario
+                Respuesta: Array con todas las transacciones del usuario
+
+            8) Endpoint para generar reporte de transacciones entre dos fechas o por estacionamiento y entre dos fechas en formato .csv
+                Método: GET
+                Parámetros: fecha inicial, fecha final, id de estacionamiento (opcional)
+                Respuesta: un archivo .csv con la información de las transacciones.
+
+            ✅* Endpoints 1) y 2) no requieren autenticación
+            ✅* Endpoints 3) al 7) solo pueden ser accesados por un usuario autenticado.
+            ✅* Endpoint 8) solo puede ser accesado por un administrador autenticado.
+            ✅* El administrador puede existir previamente en la base de datos, no es necesario poder gestionarlo.
+            ✅* El token de acceso generado en el endpoint 2 es el que debe validarse en el middleware para dar acceso o no a los endpoints restringidos
+
+    Notas
+        ✅-> La lista de estacionamientos se debe obtener de la siguiente URL mediante el método GET
+            · https://dev.parcoapp.com/api/Parkings
+
+        -> Los datos necesarios para realizar una transacción son monto, boleto e id de estacionamiento.
+           * El monto y el boleto son valores arbitrarios, el id de estacionamiento debe ser obtenido de la lista de estacionamientos.
+           * Solo se pueden realizar pagos en los estacionamientos que tienen la propiedad status = 0, de lo contrario retornar un error.
+           * Solo se puede realizar el pago si el usuario tiene saldo suficiente, de lo contrario retornar un error.
+
+        -> Los reportes deben mostrar todos los campos de todas las transacciones filtradas. Debe ser en formato .csv.
+
+        ✅-> Los usuarios y las transacciones deben guardar los siguientes datos
+           ✅* Usuario
+                · Id
+                · Nombre
+                · Teléfono
+                · Correo
+                · Fecha de creación
+                · Contraseña
+                · Saldo disponible
+
+            ✅* Transacción 
+                · Id
+                · Total
+                · Boleto
+                · Fecha de creación
+                · Id de usuario
+                · Id de estacionamiento
+                
+        ✅->Validar los parámetros de enpoints con Joi
+                
+  Recomendaciones
+        -> ✅Utilizar la librería bcrypt para encryptar y verificar las credenciales de los usuarios antes de almacenarlas
+        -> ✅Usar la librería de axios para consultar servicios externos (lista de estacionamientos)
+        -> ✅Crear un middleware para verificar la autenticidad del token de acceso proporcionado en cada request que lo requiera.
+        -> ✅El token de acceso debe ser enviado a través de la URL, por ejemplo: https://ejemplo.com/api/usuario?access_token=Cadena_De_Texto_Arbitraria
+        
+
+
+
+
+
+

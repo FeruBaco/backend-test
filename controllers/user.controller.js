@@ -69,7 +69,6 @@ module.exports = {
   getParkings: async function (req, res) {
     try {
       const parkings = await axios.get('https://dev.parcoapp.com/api/Parkings')
-      console.log(parkings.data)
       res.status(200).send(parkings.data)
     } catch (error) {
       console.log(error)
@@ -137,5 +136,18 @@ module.exports = {
         error: 'Error in transaction.'
       })
     }
+  },
+  // Retrieve trades from especific user
+  getTrades: async function (req, res) {
+    const { userId } = req.body
+    try {
+      const trades = await Trade.find({ user: userId })
+      res.status(200).send(trades)
+    } catch (error) {
+      res.status(400).json({
+        error: 'Error adding new balance.'
+      })
+    }
+    res.send(userId)
   }
 }

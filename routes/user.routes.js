@@ -8,7 +8,8 @@ const { isUser } = require('../middleware/auth')
 const { updateUserSchema } = require('../utils/schemas/user')
 const {
   addBalanceSchema,
-  payParkingSchema
+  payParkingSchema,
+  userTradesSchema
 } = require('../utils/schemas/trade')
 
 // Route /v1/user/update - Update user info
@@ -38,5 +39,11 @@ router.post('/pay-parking',
   validation(payParkingSchema),
   isUser,
   UserController.payParking)
+
+// Route /v1/user/trades - Retrieve trades from especific user
+router.get('/trades',
+  validation(userTradesSchema),
+  isUser,
+  UserController.getTrades)
 
 module.exports = router

@@ -25,17 +25,22 @@ module.exports = {
     }
 
     /**
-     * Generate payload for JWT and generate token with SECRET_KEY
+     * Generate payload for JWT
      */
     const payload = {
       id: user._id,
       email: user.email,
       type: user.type
     }
-
+    /**
+     * Generate token with payload and expires in 1 hour
+     */
     const token = jwt.sign(
       payload,
-      process.env.JWT_SECRET
+      process.env.JWT_SECRET,
+      {
+        expiresIn: '1h'
+      }
     )
 
     /**

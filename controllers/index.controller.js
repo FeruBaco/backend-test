@@ -19,7 +19,7 @@ module.exports = {
       : await bcrypt.compare(password, user.passwordHash)
 
     if (!(user && checkPassword)) {
-      res.status(401).json({
+      return res.status(401).json({
         error: 'Invalid user or password'
       })
     }
@@ -48,7 +48,7 @@ module.exports = {
      */
     user.access_token = token
     await user.save()
-    res.status(200).send({ accessToken: token })
+    return res.status(200).send({ accessToken: token })
   },
   // Register new users
   register: async function (req, res) {
@@ -72,6 +72,6 @@ module.exports = {
     })
 
     const savedUser = await user.save()
-    res.status(201).send(savedUser)
+    return res.status(201).send(savedUser)
   }
 }

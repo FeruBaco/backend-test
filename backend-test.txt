@@ -37,12 +37,12 @@
                 Parámetros: Ninguno
                 Respuesta: Lista de estacionamientos obtenida desde URL
 
-            6) Endpoint para realizar pagos de estacionamientos.
+            6) Endpoint para realizar pagos de estacionamientos. ✅
                 Método: POST
                 Parámetros: id de usuario, monto a pagar, id de estacionamiento
                 Respuesta: Todo el nuevo registro creado (id, total, boleto, fecha de creación, id de usuario, id de estacionamiento)
    
-            7) Endpoint para ver las transacciones filtradas por id de usuario.
+            7) Endpoint para ver las transacciones filtradas por id de usuario. ✅
                 Método: GET
                 Parámetros: Id de usuario
                 Respuesta: Array con todas las transacciones del usuario
@@ -63,9 +63,9 @@
             · https://dev.parcoapp.com/api/Parkings
 
         -> Los datos necesarios para realizar una transacción son monto, boleto e id de estacionamiento.
-           * El monto y el boleto son valores arbitrarios, el id de estacionamiento debe ser obtenido de la lista de estacionamientos.
-           * Solo se pueden realizar pagos en los estacionamientos que tienen la propiedad status = 0, de lo contrario retornar un error.
-           * Solo se puede realizar el pago si el usuario tiene saldo suficiente, de lo contrario retornar un error.
+           ✅* El monto y el boleto son valores arbitrarios, el id de estacionamiento debe ser obtenido de la lista de estacionamientos.
+           ✅* Solo se pueden realizar pagos en los estacionamientos que tienen la propiedad status = 0, de lo contrario retornar un error.
+           ✅* Solo se puede realizar el pago si el usuario tiene saldo suficiente, de lo contrario retornar un error.
 
         -> Los reportes deben mostrar todos los campos de todas las transacciones filtradas. Debe ser en formato .csv.
 

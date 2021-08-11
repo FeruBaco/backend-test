@@ -15,7 +15,7 @@ module.exports = {
      */
     const payload = jwtUtils.decodeJwt(accessToken)
     if (!payload.id) {
-      res.status(400).json({
+      return res.status(400).json({
         error: 'Error in payload ID'
       })
     }
@@ -43,9 +43,9 @@ module.exports = {
     try {
       await User.findOneAndUpdate({ _id: payload.id }, updateQuery)
       const updatedUser = await User.findOne({ _id: payload.id })
-      res.status(200).send(updatedUser)
+      return res.status(200).send(updatedUser)
     } catch (error) {
-      res.status(400).json({
+      return res.status(400).json({
         error: 'Error in updating "User" data.'
       })
     }
@@ -58,9 +58,9 @@ module.exports = {
       const newBalance = user.balance + amount
       await User.updateOne({ _id: id }, { balance: newBalance })
       const updatedUser = await User.findOne({ _id: id })
-      res.status(200).send(updatedUser)
+      return res.status(200).send(updatedUser)
     } catch (error) {
-      res.status(400).json({
+      return res.status(400).json({
         error: 'Error adding new balance.'
       })
     }
@@ -69,10 +69,10 @@ module.exports = {
   getParkings: async function (req, res) {
     try {
       const parkings = await axios.get('https://dev.parcoapp.com/api/Parkings')
-      res.status(200).send(parkings.data)
+      return res.status(200).send(parkings.data)
     } catch (error) {
       console.log(error)
-      res.status(400).json({
+      return res.status(400).json({
         error: 'Error getting parking list.'
       })
     }
@@ -84,10 +84,10 @@ module.exports = {
       const activeParkings = parkings.data.filter(obj => {
         return obj.status === 0
       })
-      res.status(200).send(activeParkings)
+      return res.status(200).send(activeParkings)
     } catch (error) {
       console.log(error)
-      res.status(400).json({
+      return res.status(400).json({
         error: 'Error getting parking list.'
       })
     }
@@ -107,7 +107,7 @@ module.exports = {
         return null
       })
       if (!parkingData) {
-        res.status(200).json({
+        return res.status(200).json({
           error: 'Invalid parking id.'
         })
       }
@@ -117,11 +117,12 @@ module.exports = {
       const user = await User.findOne({ _id: userId })
       const userBalance = user.balance
       if (amount > userBalance) {
-        res.status(200).json({
+        return res.status(200).json({
           error: 'Insufficient funds.'
         })
       }
       const newBalance = userBalance - amount
+      console.log(newBalance)
       await User.updateOne({ _id: userId }, { balance: newBalance })
       const trade = new Trade({
         total: amount,
@@ -130,9 +131,9 @@ module.exports = {
         parking: parkingId
       })
       const savedTrade = await trade.save()
-      res.status(200).send(savedTrade)
+      return res.status(200).send(savedTrade)
     } catch (error) {
-      res.status(400).json({
+      return res.status(400).json({
         error: 'Error in transaction.'
       })
     }
@@ -142,12 +143,11 @@ module.exports = {
     const { userId } = req.body
     try {
       const trades = await Trade.find({ user: userId })
-      res.status(200).send(trades)
+      return res.status(200).send(trades)
     } catch (error) {
-      res.status(400).json({
+      return res.status(400).json({
         error: 'Error adding new balance.'
       })
     }
-    res.send(userId)
   }
 }

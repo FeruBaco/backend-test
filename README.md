@@ -1,13 +1,15 @@
 # Backend Test
 
-Backend Test es una API de prueba.
+Backend Test es una API de prueba que funciona utilizando un Cluster de MongoDB Atlas.
 
-## Instalation
+## Instalación
 Se necesita tener instalado [Node.js](https://nodejs.org/es/) y [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) para instalar Backend Test.
 
 ```bash
 npm install
 ```
+
+Una vez instalado se necesita crear un archivo .env con las credenciales que se piden.
 
 # Públicos
 Estos endpoints no necesitan ninguna autorización.

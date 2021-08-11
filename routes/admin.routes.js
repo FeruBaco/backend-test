@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const validation = require('../middleware/validation-schema')
+const validation = require('../middleware/validationSchema')
 const AdminController = require('../controllers/admin.controller')
 
 // Middlewares

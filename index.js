@@ -1,6 +1,7 @@
 require('dotenv').config()
 
 const express = require('express')
+const handleErrors = require('./middleware/handleErrors')
 const notFound = require('./middleware/notFound')
 const IndexRouter = require('./routes/index.routes')
 const UserRouter = require('./routes/user.routes')
@@ -12,6 +13,7 @@ const mongoDB = new MongoDB()
 mongoDB.connect()
 
 // Middlewares
+
 app.use(express.json())
 
 // Routes
@@ -20,6 +22,7 @@ app.use('/v1/user', UserRouter)
 app.use('/v1/admin', AdminRouter)
 
 app.use(notFound)
+app.use(handleErrors)
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
